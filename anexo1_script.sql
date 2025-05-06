@@ -67,7 +67,7 @@ CREATE TABLE Conductores(
     nombre VARCHAR(25) NOT NULL,
     apellidoPaterno VARCHAR(25) NOT NULL,
     apellidoMaterno VARCHAR(25) NOT NULL,
-    telefono BIGINT(10) NOT NULL,
+    telfono BIGINT(10) NOT NULL,
     correo VARCHAR(120) NOT NULL,
     
 	PRIMARY KEY (numeroDeDocumento, tipoDocumento)
@@ -152,4 +152,16 @@ FOREIGN KEY (empresa) REFERENCES Empresas(nit);
 
 ALTER TABLE Reportes 
 ADD CONSTRAINT Fk_InfoAdministrador
-FOREIGN KEY (documento_administrador, tipo_doc_administrador) REFERENCES Administradores(numeroDeDocumento, tipoDocumento)
+FOREIGN KEY (documento_administrador, tipo_doc_administrador) REFERENCES Administradores(numeroDeDocumento, tipoDocumento);
+
+-- Añado nuevas columnas a la tabla conductores
+ALTER TABLE Conductores ADD estado BOOL;
+ALTER TABLE Conductores ADD fechaIngreso DATE;
+
+-- Cambio el nombre de una columna
+ALTER TABLE Conductores CHANGE COLUMN telfono telefono BIGINT(10) ;
+
+-- Cambio el nombre de la tabla de Conductores a Empleados
+RENAME TABLE Conductores TO Empleados;
+
+-- Cambio el tipo de dato de una columna 
