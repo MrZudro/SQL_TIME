@@ -3,9 +3,9 @@ CREATE DATABASE terminal_transporte;
 USE terminal_transporte;
 
 CREATE TABLE Tiquetes(
-    idTiquete INT PRIMARY KEY AUTO_INCREMENT,
+    idTiquete INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     precio DECIMAL(10,2) NOT NULL,
-    horaVenta DATE NOT NULL, 
+    horaVenta TIMESTAMP NOT NULL, 
     idPuntoDeVenta INT NOT NULL,
     empresa BIGINT NOT NULL,
     documento_pasajero BIGINT(11) NOT NULL,
