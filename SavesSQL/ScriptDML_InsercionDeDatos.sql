@@ -1,32 +1,32 @@
 -- DML, instrucciones para realizar consultas a la base de datos.
 INSERT INTO TiposDocumentos 
 VALUES
-(1, "Cedula de Ciudadania", "CEDULA QUE IDENTIFICA AL COLOMBIANO PAPÁ"),
-(2, "Tarjeta de Identidad", "EL DOCUMENTO DE LOS NIÑOS"),
-(3, "Cedula de Extranjeria", "EL DOCUMENTO DE LOS CHAMOZUELOS"),
-(4, "Pasaporte", "DOCUMENTOS DE LOS DE GRINGOLANDIA");
+(NULL, "Cedula de Ciudadania", "CEDULA QUE IDENTIFICA AL COLOMBIANO PAPÁ"),
+(NULL, "Tarjeta de Identidad", "EL DOCUMENTO DE LOS NIÑOS"),
+(NULL, "Cedula de Extranjeria", "EL DOCUMENTO DE LOS CHAMOZUELOS"),
+(NULL, "Pasaporte", "DOCUMENTOS DE LOS DE GRINGOLANDIA");
 
 INSERT INTO PuntosDeVenta (idPuntoDeVenta, nombre, descripcion) VALUES
-(1, 'Taquilla Principal Salitre', 'Ventanilla A1 en el Terminal Salitre'),
-(2, 'Taquilla Norte', 'Ventanilla B2 en el Terminal del Norte'),
-(3, 'Venta Online Web', 'Ventas realizadas a través del portal web'),
-(4, 'App Móvil', 'Ventas realizadas a través de la aplicación móvil');
+(NULL, 'Taquilla Principal Salitre', 'Ventanilla A1 en el Terminal Salitre'),
+(NULL, 'Taquilla Norte', 'Ventanilla B2 en el Terminal del Norte'),
+(NULL, 'Venta Online Web', 'Ventas realizadas a través del portal web'),
+(NULL, 'App Móvil', 'Ventas realizadas a través de la aplicación móvil');
 
 INSERT INTO EstadosTiquetes
 VALUES
-(1, 'Vendido'),
-(2, 'Cancelado'),
-(3, 'Utilizado'),
-(4, 'Abordado');
+(NULL, 'Vendido'),
+(NULL, 'Cancelado'),
+(NULL, 'Utilizado'),
+(NULL, 'Abordado');
 
 INSERT INTO Rutas
 VALUES
-(1, "Bogotá", "Chiquinquirá"),
-(2, "Chiquinquirá", "Bogotá"),
-(3, "Bogotá", "Chía"),
-(4, "Chía", "Bogotá"), 
-(5, "Bogotá", "Fosca"),
-(6, "Fosca", "Bogotá");
+(NULL, "Bogotá", "Chiquinquirá"),
+(NULL, "Chiquinquirá", "Bogotá"),
+(NULL, "Bogotá", "Chía"),
+(NULL, "Chía", "Bogotá"), 
+(NULL, "Bogotá", "Fosca"),
+(NULL, "Fosca", "Bogotá");
 
 INSERT INTO Empresas
 VALUES
