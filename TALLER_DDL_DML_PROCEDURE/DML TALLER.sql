@@ -29,6 +29,7 @@ CALL insertarProducto("Impresora HP LaserJet Pro M26nw", 180, 3);
 */
 -- 1. LISTE EL NOMBRE DE TODOS LOS PRODUCTOS QUE HAY
 SELECT nombre FROM producto;
+SELECT * FROM fabricante;
 
 -- 2. LISTAR NOMBRES Y PRECIOS DE PRODUCTOS
 SELECT nombre, precio FROM producto;
@@ -177,3 +178,99 @@ SELECT producto.nombre AS NombreDelProducto, precio, fabricante.nombre AS Nombre
 
 -- 13. LISTADO DE ID Y NOMBRE DE FABRICANTE UNICAMENTE AQUELLOS QUE TIENEN PRODUCTO ALGUNO
 SELECT fabricante.codigo AS IdFabricante, fabricante.nombre FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo GROUP BY idFabricante;
+
+/*
+	CONSULTAS MULTITABLA (Composicion externa) LEFT JOIN & RIGHT JOIN
+*/
+
+-- 1. TODOS LOS FABRICANTES Y SUS PRODUCTOS
+SELECT fabricante.codigo AS idFabricante, fabricante.nombre AS NombreDelFabricante, producto.nombre, producto.precio FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo; 
+
+-- 2. TODOS LOS FABRICANTES QUE NO TENGAN NINGUN PRODUCTO ASOCIADO
+SELECT fabricante.codigo AS idFabricante, fabricante.nombre AS NombreDelFabricante, producto.nombre, producto.precio FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo WHERE producto.precio IS NULL; 
+
+-- 3. PUEDEN EXISTIR PRODUCTOS QUE NO ESTEN RELACIONADOS CON UN FABRICANTE
+-- SI, YA QUE DESDE EL PRINCIPIO SE PERMITIO QUE LA COLUMNA codigo_fabricante FUESE NULLABLE, ES DECIR QUE PERMITIESE ALBERGAR VALORES DE TIPO NULL
+
+/*
+	CONSULTAS RESUMEN
+*/
+
+-- 1. NUMERO TOTAL DE PRODUCTOS QUE HAY EN PRODUCTO
+SELECT COUNT(*) FROM producto;
+
+-- 2. NUMERO TOTAL DE FABRICANTES QUE HAY EN FABRICANTE
+SELECT COUNT(*) FROM fabricante;
+
+-- 3. CUANTAS VECES APARECE CADA UNO DE LOS FABRICANTES EN PRODUCTOS
+SELECT codigo_fabricante, COUNT(codigo_fabricante) AS conteo FROM producto GROUP BY codigo_fabricante;
+
+-- 4. MEDIA DE TODOS LOS PRECIOS DE LOS PRODUCTOS 
+SELECT AVG(precio) AS MediaDePrecio FROM producto;
+
+-- 5. PRECIO MAS BARATO DE TODOS LOS PRODUCTOS
+SELECT MIN(precio) AS Producto_Mas_Barato FROM producto;
+
+-- 6. PRECIO MAS CARO DE TODOS LOS PRODUCTOS
+SELECT MAX(precio) AS Producto_Mas_cariñoso FROM producto;
+
+-- 7. PRECIO Y NOMBRE DEL PRODCUTO MAS BARATO
+SELECT nombre, MIN(precio) AS Producto_Mas_Barato FROM producto;
+
+-- 8. PRECIO Y NOMBRE DEL PRODUCTO MAS CARO
+SELECT nombre, MAX(precio) AS Producto_Mas_Caro FROM producto;
+
+-- 9. SUMA DEL PRECIO DE TODOS LOS PRODUCTOS
+SELECT SUM(precio) AS Suma_de_precio FROM producto;
+
+-- 10. NUMERO DE PRODUCTOS QUE TIENE ASUS
+SELECT COUNT(codigo_fabricante) FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "Asus";
+
+-- 11. MEDIA DE PRECIOS DE ASUS 
+SELECT AVG(precio) AS PromedioDePrecios FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "Asus";
+
+-- 12. PRECIO MAS BARATO ENTRE LOS PRODCUTOS DE ASUS
+SELECT MIN(precio) AS PrecioMasBarato FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "Asus";
+
+-- 13. PRECIO MAS CARO ENTRE LOS PRODUCTOS DE ASUS
+SELECT MAX(precio) AS PrecioMasCaro FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "Asus";
+
+-- 14. SUMA DE LAS PRODUCTOS DE ASUS
+SELECT SUM(precio) AS SumaDePrecios FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "Asus";
+
+-- 15. PRECIO MAX, MIN, AVG Y SUM DE PRODCUTOS DE CRUCIAL
+SELECT MAX(precio) AS PrecioMasCaro, MIN(precio) AS PrecioMasBarato, AVG(precio) AS PrecioPromedio, SUM(precio) AS SumatoriaDePrecios FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "crucial";
+
+-- 16. NUMERO DE PRODUCTOS DE CADA FABRICANTE ORDENADO DE MAYOR A MENOR
+SELECT fabricante.nombre AS NombreDelFabricante, COUNT(producto.codigo) AS NumeroDeProductos FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.codigo, fabricante.nombre ORDER BY NumeroDeProductos DESC;  
+
+-- 17. PRECIO MAX, MIN, AVG DE LOS PRODUCTOS DE CADA FABRICANTE
+SELECT fabricante.nombre AS NombreDelFabricante, MAX(producto.precio) AS PrecioMasAlto, MIN(producto.precio) AS PrecioMasBajo, AVG(producto.precio) AS PromedioDePrecios FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.codigo, fabricante.nombre;
+
+-- 18. PRECIO MAX, MIN, AVG, Y EL NUMERO TOTAL DE PRODUCTOS DE TODOS LOS FABRICANTES QCUYO PRECIO SEA > 200
+SELECT fabricante.codigo, MAX(producto.precio) AS PrecioMasAlto, MIN(producto.precio) AS PrecioMasBajo, AVG(producto.precio) AS PromedioDePrecios, COUNT(producto.codigo) AS TotalDeProductos FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo WHERE precio > 200 GROUP BY fabricante.codigo, fabricante.nombre;
+
+-- 19. NOMBRE Y PRECIO MAX, MIN, AVG, Y TOTAL DE PRODUCTOS DE FABRICANTES CUYO PRECIO SEA > 200 
+SELECT fabricante.codigo AS idFabricante, fabricante.nombre AS NombreDeFabricante, MAX(producto.precio) AS PrecioMasAlto, MIN(producto.precio) AS PrecioMasBajo, AVG(producto.precio) AS PromedioDePrecios, COUNT(producto.codigo) AS TotalDeProductos FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo WHERE precio > 200 GROUP BY fabricante.codigo, fabricante.nombre;
+
+-- 20 NUMERO DE PRODUCTOS CON PRECIO >= 180
+SELECT COUNT(precio) AS Conteo FROM producto WHERE precio >= 180;
+
+-- 21. NUMERO DE PRODUCTOS DE CADA FABRICANTE CON UN PRECIO QUE SEA >= 180
+SELECT fabricante.nombre, COUNT(producto.codigo) AS ConteoDeProductos FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE precio >= 180 GROUP BY fabricante.nombre;
+
+-- 22. PROMEDIO DE PRECIO DE CADA UNO DE LOS FABRICANTES MOSTRANDO EL PROMEDIO Y EL ID UNICAMENTE
+SELECT fabricante.codigo, AVG(precio) AS PromedioPrecios FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.codigo;
+SELECT fabricante.codigo, AVG(precio) AS PromedioPrecios FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.codigo;
+
+-- 23. PROMEDIO DE PRECIO DE CADA UNO DE LOS FABRICANTES MOSTRANDO EL PROMEDIO Y EL NOMBRE
+SELECT fabricante.nombre, AVG(precio) AS PromedioPrecios FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.codigo;
+
+-- 24. NOMBRES DE FABRICANTES CON PRODUCTOS MAYORES O IGUALES A 150
+SELECT fabricante.nombre, AVG(precio) AS PrecioMedio FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.nombre HAVING AVG(precio) >= 150;
+
+-- 25. NOMBRES DE FABRICANTE QUE TIENEN DOS O MAS PRODUCTOS
+SELECT fabricante.nombre FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.nombre HAVING COUNT(producto.codigo_fabricante) >= 2;
+
+-- 26. NOMBRES DE FABRICANTES Y NUMERO DE PRODUCTOS CON PRECIOS SUPERIORES A 220
+SELECT fabricante.nombre, COUNT(producto.codigo_fabricante) AS Conteo FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo WHERE precio >= 220 GROUP BY fabricante.nombre ORDER BY Conteo DESC; 
