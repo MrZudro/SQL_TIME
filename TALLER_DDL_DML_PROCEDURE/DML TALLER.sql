@@ -136,7 +136,7 @@ SELECT nombre, precio FROM producto WHERE nombre LIKE "%Monitor%" AND precio < 2
 SELECT nombre, precio FROM producto WHERE precio >= 180 ORDER BY precio DESC, nombre ASC;
 
 /*
-	#### CONSULTAS MULTITABLA (COMPOSICION INTERNA) ####
+	#### CONSULTAS MULTITABLA (COMPOSICION INTERNA) <<JOIN OR INNER JOIN>> ####
 */
 
 -- 1. LISTA CON NOMBRE Y PRECIO DE PRODUCTO Y NOMBRE DE FABRICANTE
@@ -148,4 +148,32 @@ SELECT producto.nombre AS nombre_producto, fabricante.nombre AS nombre_fabricant
 -- 3. LISTA CON ID Y NOMBRE DE PRODUCTO ADEMAS DE ID FABRICANTE Y NOMBRE FABRICANTE
 SELECT producto.codigo AS idProducto, producto.nombre AS NombreDelProducto, fabricante.codigo AS idFabricante, fabricante.nombre AS NombreDelFabricante FROM producto JOIN fabricante ON producto.codigo = fabricante.codigo;
 
--- 4. DEVUELVE NOMBRE Y PRECIO DEL PRODUCTO 
+-- 4. DEVUELVE NOMBRE Y PRECIO DEL PRODUCTO ORDENANDO POR EL MAS BARATO
+SELECT producto.nombre AS NombreDelProducto, precio, fabricante.nombre AS Fabricante FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo ORDER BY precio ASC LIMIT 1;
+
+-- 5. DEVUELVE EL NOMBRE Y PRECIO DEL PRODUCTO ORDENANDO POR EL MAS CARO
+SELECT producto.nombre AS NombreDelProducto, precio, fabricante.nombre AS Fabricante FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo ORDER BY precio DESC LIMIT 1;
+
+-- 6. LISTA CON TODOS LOS PRODUCTOS DE LENOVO
+SELECT fabricante.nombre AS NombreDeFabricante, producto.nombre AS NombreDelProducto, precio FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "lenovo";
+
+-- 7. LISTA CON LOS PRODCUTOS DE CRUCIAL CUYO PRECIO SEA MAYOR A 200
+SELECT fabricante.nombre AS NombreDeFabricante, producto.nombre AS NombreDelProducto, precio FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "crucial" AND precio > 200;
+
+-- 8. LISTA DE LOS PRODUCTOS DE ASUS, HEWLETT PACKARD Y SEAGATE SIN IN  
+SELECT fabricante.nombre AS Nombre_de_fabricante, producto.nombre AS Nombre_de_producto, precio FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "Asus" OR fabricante.nombre LIKE "Hewlett-Packard" OR fabricante.nombre LIKE "SEAGATE";
+
+-- 9. LISTA DE LOS PRODUCTOS DE ASUS, HEWLETT PACKARD Y SEAGATE USANDO IN 
+SELECT fabricante.nombre AS Nombre_de_fabricante, producto.nombre AS Nombre_de_producto, precio FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre IN("Asus","Hewlett-Packard","Seagate");
+
+-- 10. LISTA CON EL NOMBRE Y PRECIO DE TODOS LOS PRODUCTOS TERMINADOS EN E 
+SELECT fabricante.nombre AS NombreDelFabricante, producto.nombre AS NombreDelProducto, precio FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "%e";
+
+-- 11. LISTA CON EL NOMBRE Y PRECIO DE TODOS LOS PRODUCTOS QUE CONTENGAN W
+SELECT fabricante.nombre AS NombreDelFabricante, producto.nombre AS NombreDelProducto, precio FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE fabricante.nombre LIKE "%w%";
+
+-- 12. LISTADO CON NOMBRE Y PRECIO, NOMBRE DE FABRICANTE, ORDENADOS SEGUN CORRESPONDA
+SELECT producto.nombre AS NombreDelProducto, precio, fabricante.nombre AS NombreDeFabricante FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo WHERE precio >= 180 ORDER BY precio DESC, producto.nombre ASC;
+
+-- 13. LISTADO DE ID Y NOMBRE DE FABRICANTE UNICAMENTE AQUELLOS QUE TIENEN PRODUCTO ALGUNO
+SELECT fabricante.codigo AS IdFabricante, fabricante.nombre FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo GROUP BY idFabricante;
