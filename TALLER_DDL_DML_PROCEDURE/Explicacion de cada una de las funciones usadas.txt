@@ -1,6 +1,0 @@
-upper() función que permite volver mayúsculas
-lower() función que permite volver minúsculas
-concat() función que permite concater cadena de caracteres y/o subcadenas
-substring()función que permite crear subcadenas a partir de una mas grande, esta recibe una cadena, el índice donde se crea y cuantos caracteres apartir de allí tomara para crear la subcadena.
-round() función que permite redondear un entero
-CHAR_LENGTH() función que permite conocer el tamaño de una cadena
