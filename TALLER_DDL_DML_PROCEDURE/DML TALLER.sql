@@ -274,3 +274,12 @@ SELECT fabricante.nombre FROM fabricante LEFT JOIN producto ON codigo_fabricante
 
 -- 26. NOMBRES DE FABRICANTES Y NUMERO DE PRODUCTOS CON PRECIOS SUPERIORES A 220
 SELECT fabricante.nombre, COUNT(producto.codigo_fabricante) AS Conteo FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo WHERE precio >= 220 GROUP BY fabricante.nombre ORDER BY Conteo DESC; 
+
+-- 27. NOMBRES DE FABRICANTES, NUMERO DE PRODUCTOS CON UN PRECIO TAL QUE >= 200
+SELECT fabricante.nombre, COUNT(producto.codigo_fabricante) AS total FROM fabricante LEFT JOIN producto ON codigo_fabricante = fabricante.codigo AND precio >= 220 GROUP BY fabricante.nombre ORDER BY total DESC, fabricante.nombre DESC; 
+
+-- 28. LISTA CON NOMBRE DE FABRICANTES CUYOS PRODUCTOS SUMADOS SON > 1000
+SELECT fabricante.nombre FROM fabricante JOIN producto ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.nombre, fabricante.codigo HAVING SUM(producto.precio) > 1000;
+
+-- 29. LISTA CON EL PRODUCTO MAS CARO DE CADA FABRICANTE
+SELECT producto.nombre AS NombreDeProducto, precio AS PrecioDelProducto, fabricante.nombre AS NombreDelFabricante FROM producto JOIN fabricante ON codigo_fabricante = fabricante.codigo GROUP BY fabricante.nombre ASC HAVING MAX(precio);
