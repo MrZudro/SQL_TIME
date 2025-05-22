@@ -38,6 +38,32 @@ CREATE TABLE categorias(
     nombre VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE auditoria_productos (
+    id_auditoria INT AUTO_INCREMENT PRIMARY KEY,
+    id_producto_afectado INT,
+    nombre_anterior VARCHAR(50),
+    precio_anterior DECIMAL(10,2),
+    stock_anterior FLOAT,
+    nombre_nuevo VARCHAR(50),
+    precio_nuevo DECIMAL(10,2),
+    stock_nuevo FLOAT,
+    accion VARCHAR(10), -- INSERT, UPDATE, DELETE
+    usuario_db VARCHAR(100),
+    fecha_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE auditoria_cambios_precio (
+    id_cambio INT AUTO_INCREMENT PRIMARY KEY,
+    id_producto INT,
+    precio_anterior DECIMAL(10,2),
+    precio_nuevo DECIMAL(10,2),
+    fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE auditoria_cambios_precio
+ADD CONSTRAINT FK_audCambios_precio
+FOREIGN KEY (id_producto) REFERENCES productos(id_producto);
+
 ALTER TABLE productos
 ADD CONSTRAINT FK_categoria_productos
 FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria);
