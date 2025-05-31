@@ -1,16 +1,19 @@
 
-# TALLERES SQL
+# APRENDIZAJE SQL DE MANUEL QUIAZUA
 
-En este repositorio podra encontrar organizados en diferentes directorios los talleres desarollados en clase.
+En este repositorio podra encontrar organizados en diferentes directorios las guias, los talleres y algunas pruebas realizadas en clase de la mano
+del instructor Mauricio Estupiñan.
 
-Estimado instructor, el segundo taller lo puede encontrar en la carpeta Talleres, el taller numero dos.
-
-
-
-![Logo](https://cdn.pixabay.com/photo/2016/03/23/04/57/cat-1274094_1280.png)
+Estimado instructor, cada uno de los talleres los encontrará debidamente desarrollados en la carpeta 'Talleres'
+Puede corroborar cada una de las fechas de entrega en cada uno de los commits,
 
 
-## Authors
+
+![Logo](https://cdn.pixabay.com/photo/2025/05/31/03/42/03-42-49-701_960_720.png)
+
+
+## Authors & Colaborators
 
 - [@MrZudro](https://github.com/MrZudro)
+- [@MauricioEstupiñan](https://github.com/mauricioestupian)
 
